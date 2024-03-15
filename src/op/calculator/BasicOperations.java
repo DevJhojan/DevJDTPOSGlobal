@@ -9,27 +9,32 @@ public class BasicOperations {
     private String num;
     public BasicOperations(){}
     public double DataManagement(String operation) {
-        char[] operationStringArray = operation.toCharArray();
-        for(char data :operationStringArray){
-            if(this.numbersTwo.isEmpty() && this.operators.isEmpty()){
-                if(Character.isDigit(data) || data == '.'){
-                    this.num = ""+data;
-                    numbersOne.add(this.num);
+        try{
+            char[] operationStringArray = operation.toCharArray();
+            for(char data :operationStringArray){
+                if(this.numbersTwo.isEmpty() && this.operators.isEmpty()){
+                    if(Character.isDigit(data) || data == '.'){
+                        this.num = ""+data;
+                        numbersOne.add(this.num);
+                    }
+                }
+                if(data == '+' || data == '-' || data == '*' || data == '/' || data == '%'){
+                    this.calculated_operation();
+                    this.operators.add(data);
+                }
+                else if(!this.operators.isEmpty() && !this.numbersOne.isEmpty()){
+                    if(Character.isDigit(data) || data == '.'){
+                        this.num = ""+data;
+                        this.numbersTwo.add(this.num);
+                    }
                 }
             }
-            if(data == '+' || data == '-' || data == '*' || data == '/' || data == '%'){
-                this.calculated_operation();
-                this.operators.add(data);
-            }
-            else if(!this.operators.isEmpty() && !this.numbersOne.isEmpty()){
-                if(Character.isDigit(data) || data == '.'){
-                    this.num = ""+data;
-                    this.numbersTwo.add(this.num);
-                }
-            }
+            this.calculated_operation();
+            return this.result;
+        }catch (Exception ex){
+            System.out.println("Error: "+ ex);
+            return 0.0;
         }
-        this.calculated_operation();
-        return this.result;
     }
 
     private void calculated_operation() {
